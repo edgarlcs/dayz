@@ -4,8 +4,8 @@ const Mixed = () => {
       id="Layer_2"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 533.23 615.4"
-      width={24}
-      height={24}
+      width={28}
+      height={28}
       className=" dark:fill-white fill-black"
     >
       <defs>

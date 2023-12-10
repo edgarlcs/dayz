@@ -1,7 +1,9 @@
 "use client";
 import Image from "next/image";
-import logo from "@/public/images/logo.svg";
+import logo from "@/public/images/ass.png";
+import logoLight from "@/public/images/logo_light.svg";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import {
   NavigationMenu,
@@ -21,8 +23,14 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <div className=" flex  w-full h-16 justify-between items-center bg-white dark:bg-black pl-0 pr-2">
-      <Image src={logo} alt="Adrian Dayz logo" height={64} />
+    <motion.div
+      className=" flex  w-full h-16 justify-between items-center bg-white dark:bg-black pl-0 pr-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2 }}
+    >
+      <Image src={logo} alt="Adrian Dayz logo" height={64} priority />
+
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -35,7 +43,7 @@ const Navbar = () => {
           <NavigationMenuItem>
             <NavigationMenuTrigger>Servicios</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              <ul className="grid gap-3 p-6 w-full md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                 <li className="row-span-3">
                   <NavigationMenuLink asChild>
                     <a
@@ -45,21 +53,18 @@ const Navbar = () => {
                       <div className="mb-2 mt-4 text-lg font-medium">
                         shadcn/ui
                       </div>
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Beautifully designed components built with Radix UI and
-                        Tailwind CSS.
-                      </p>
+                      <p className="text-sm leading-tight text-muted-foreground"></p>
                     </a>
                   </NavigationMenuLink>
                 </li>
                 <a href="/docs" title="Introduction">
-                  Re-usable components built using Radix UI and Tailwind CSS.
+                  Re-usable components
                 </a>
                 <a href="/docs/installation" title="Installation">
-                  How to install dependencies and structure your app.
+                  How to install
                 </a>
                 <a href="/docs/primitives/typography" title="Typography">
-                  Styles for headings, paragraphs, lists...etc
+                  Styles for headings
                 </a>
               </ul>
             </NavigationMenuContent>
@@ -67,7 +72,7 @@ const Navbar = () => {
         </NavigationMenuList>
       </NavigationMenu>
       <DarkModeToggleButton />
-    </div>
+    </motion.div>
   );
 };
 

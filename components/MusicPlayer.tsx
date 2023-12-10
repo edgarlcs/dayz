@@ -7,8 +7,10 @@ import Image from "next/image";
 import Unmixed from "./Unmixed";
 import Mixed from "./Mixed";
 import { motion } from "framer-motion";
-import { isMobileSafari } from "react-device-detect";
+import { isIOS } from "react-device-detect";
 import { useMusicPlayer } from "./MusicPlayerContext";
+import Spotify from "./Spotify";
+import { Button } from "./ui/button";
 
 interface MusicPlayerProps {
   mixedSong: string;
@@ -17,6 +19,8 @@ interface MusicPlayerProps {
   songName: string;
   artist: string;
   duration: number;
+  backgroundColor?: string;
+  spotifyLink?: string;
 }
 
 const MusicPlayer = ({
@@ -26,6 +30,8 @@ const MusicPlayer = ({
   songName,
   artist,
   duration,
+  spotifyLink,
+  backgroundColor,
 }: MusicPlayerProps) => {
   const song1Ref = useRef<HTMLAudioElement>(null);
   const song2Ref = useRef<HTMLAudioElement>(null);
@@ -33,20 +39,28 @@ const MusicPlayer = ({
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isManuallySeeking, setIsManuallySeeking] = useState<boolean>(false);
+  const [showMixer, setShowMixer] = useState<boolean>(true);
+  const [background, setBackground] = useState<string>("bg-white");
 
   const { playingId, setPlayingId } = useMusicPlayer();
+  useEffect(() => {
+    setShowMixer(!isIOS);
+    if (backgroundColor) {
+      setBackground(backgroundColor);
+    }
+  }, []);
 
   useEffect(() => {
-    const song1Volume = isMobileSafari ? 1 : mixValue / 100;
+    const song1Volume = isIOS ? 1 : mixValue / 100;
     const song2Volume = 1 - song1Volume;
 
     if (song1Ref.current) {
       song1Ref.current.volume = song1Volume;
     }
-    if (!isMobileSafari && song2Ref.current) {
+    if (!isIOS && song2Ref.current) {
       song2Ref.current.volume = song2Volume;
     }
-  }, [mixValue, isMobileSafari]);
+  }, [mixValue, isIOS]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -67,7 +81,7 @@ const MusicPlayer = ({
     if (song1Ref.current) {
       song1Ref.current.currentTime = newTime;
     }
-    if (!isMobileSafari && song2Ref.current) {
+    if (!isIOS && song2Ref.current) {
       song2Ref.current.currentTime = newTime;
     }
     setIsManuallySeeking(false);
@@ -77,7 +91,7 @@ const MusicPlayer = ({
     const song1 = song1Ref.current;
     const song2 = song2Ref.current;
 
-    if (song1 && song2 && !isMobileSafari) {
+    if (song1 && song2 && !isIOS) {
       // Sync the current time of both songs before playing
       song2.currentTime = song1.currentTime;
       song1.currentTime = song2.currentTime;
@@ -114,7 +128,7 @@ const MusicPlayer = ({
         playSongs();
       }
     }
-    if (!isMobileSafari && song2) {
+    if (!isIOS && song2) {
       if (isPlaying) {
         song2.pause();
       }
@@ -140,7 +154,7 @@ const MusicPlayer = ({
         playSongs();
       }
     }
-    if (!isMobileSafari && song2) {
+    if (!isIOS && song2) {
       if (isPlaying) {
         song2.pause();
       }
@@ -156,34 +170,60 @@ const MusicPlayer = ({
 
   return (
     <motion.div
-      className="grid grid-cols-3 w-full gap-3 p-4 rounded-lg border border-gray-200"
+      className={`grid grid-cols-3 w-full md:w-[600px] gap-3 p-4 rounded-lg  shadow-md`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      transition={{ duration: 0.7 }}
     >
-      <Image
-        src={cover}
-        alt="Adrian Dayz logo"
-        height={128}
-        className=" col-span-1"
-      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="flex flex-col justify-center items-center gap-2"
+      >
+        <Image
+          src={cover}
+          alt={`${songName} cover`}
+          height={128}
+          width={128}
+          className=" col-span-1 rounded-md shadow-lg"
+          priority
+        />
+        <motion.a
+          whileHover={{ scale: 1.2 }}
+          href={spotifyLink}
+          target="_blank"
+        >
+          <Spotify />
+        </motion.a>
+      </motion.div>
+
       <div className="flex flex-col col-span-2 justify-between">
         <audio ref={song1Ref} src={mixedSong} preload="auto" />
         <audio ref={song2Ref} src={rawSong} preload="auto" />
-        <div>
+        <motion.div
+          initial={{ x: -5 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.7 }}
+        >
           <section className="flex flex-row gap-2 items-center">
             <Music />
-            <p className="text-xl font-bold">{songName}</p>
+            <p className="text-xl md:text-2xl font-bold">{songName}</p>
           </section>
           <section className="flex flex-row gap-2 items-center">
             <UserRound />
-            <p className="text-lg">{artist}</p>
+            <p className="text-lg md:text-xl">{artist}</p>
           </section>
-        </div>
+        </motion.div>
 
         <div className="flex flex-row items-center gap-1">
-          <button onClick={togglePlay} className="play-button ">
+          <motion.button
+            onClick={togglePlay}
+            className="play-button "
+            whileHover={{ scale: 1.2 }}
+          >
             {isPlaying ? <Pause /> : <Play />}
-          </button>
+          </motion.button>
           <input
             id="time-slider"
             type="range"
@@ -203,7 +243,7 @@ const MusicPlayer = ({
         </div>
       </div>
 
-      <div className={`${isMobileSafari ? "hidden" : ""} col-span-3`}>
+      <div className={`${!showMixer ? "hidden" : ""} col-span-3`}>
         <Slider
           defaultValue={[0]}
           max={100}
@@ -216,8 +256,8 @@ const MusicPlayer = ({
       </div>
       <div
         className={`${
-          isMobileSafari ? "hidden" : ""
-        } col-span-3 flex flex-row justify-between`}
+          !showMixer ? "hidden" : ""
+        } col-span-3 flex flex-row justify-between items-center`}
       >
         <Unmixed />
         <Mixed />

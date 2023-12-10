@@ -16,6 +16,7 @@ export default function Home() {
           songName="Secuelas de amor"
           artist="Eduardo Cadena"
           duration={60 * 3 + 27}
+          spotifyLink="https://open.spotify.com/track/40VPsCnOdYumiFNa16GnLw?si=2597df5515f54adb"
         />
         <MusicPlayer
           mixedSong="/music/plebes_fx.mp3"
@@ -24,8 +25,20 @@ export default function Home() {
           songName="Asi son mis plebes"
           artist="Sexta Zona"
           duration={60 * 2 + 55}
+          spotifyLink="https://open.spotify.com/track/35HWyTECUU720n7wKKGxxJ?si=4b3c274b7ae34417"
         />
       </MusicPlayerProvider>
+      {/* <iframe
+        className="rounded-lg w-[600px]"
+        src="https://open.spotify.com/embed/track/40VPsCnOdYumiFNa16GnLw?utm_source=generator"
+        width="100%"
+        height="352"
+      
+        // frameBorder="0"
+        allowFullScreen={true}
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe> */}
     </main>
   );
 }
