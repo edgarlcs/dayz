@@ -15,6 +15,7 @@ export default function Home() {
           cover={secuelas}
           songName="Secuelas de amor"
           artist="Eduardo Cadena"
+          duration={60 * 3 + 27}
         />
         <MusicPlayer
           mixedSong="/music/plebes_fx.mp3"
@@ -22,6 +23,7 @@ export default function Home() {
           cover={plebes}
           songName="Asi son mis plebes"
           artist="Sexta Zona"
+          duration={60 * 2 + 55}
         />
       </MusicPlayerProvider>
     </main>
