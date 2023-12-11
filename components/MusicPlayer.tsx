@@ -67,7 +67,7 @@ const MusicPlayer = ({
   }, [resolvedTheme]);
   useEffect(() => {
     setShowMixer(!isIOS);
-  }, [isIOS]);
+  }, []);
 
   // useEffect(() => {
   //   const getColor = async (image: HTMLImageElement) => {
@@ -99,7 +99,7 @@ const MusicPlayer = ({
     if (!isIOS && song2Ref.current) {
       song2Ref.current.volume = song2Volume;
     }
-  }, [mixValue, isIOS]);
+  }, [mixValue]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -180,7 +180,7 @@ const MusicPlayer = ({
     if (playingId !== songName && isPlaying) {
       pauseSongs();
     }
-  }, [playingId, songName, isPlaying]);
+  }, [playingId, songName, isPlaying, pauseSongs]);
 
   const togglePlay = () => {
     const song1 = song1Ref.current;
