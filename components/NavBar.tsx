@@ -3,6 +3,7 @@ import Image from "next/image";
 import logo from "@/public/images/logo.png";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Home } from "lucide-react";
 import { useState } from "react";
 import {
   NavigationMenu,
@@ -29,44 +30,57 @@ const Navbar = () => {
       // animate={{ opacity: 1 }}
       // transition={{ duration: 2 }}
     >
-      <motion.a whileHover={{ scale: 1.2 }} href="/">
-        <Image src={logo} alt="Adrian Dayz logo" height={64} priority />
-      </motion.a>
+      <motion.div whileHover={{ scale: 1.2 }}>
+        <Link href={"/"}>
+          <Image src={logo} alt="Adrian Dayz logo" height={64} priority />
+        </Link>
+      </motion.div>
 
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Servicios</NavigationMenuTrigger>
+            <Link href={"/"}>
+              <Home />
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className="pr-0">
+              Servicios
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid gap-3 p-6 w-full md:w-[400px]">
-                <li className="flex items-center w-full dark:hover:bg-gray-800 p-2 rounded-md">
-                  <Link className="" href="/grabacion" title="Grabación">
+                <Link
+                  className="w-full h-full"
+                  href="/grabacion"
+                  title="Grabación"
+                >
+                  <li className="flex items-center w-full hover:bg-gray-200gm dark:hover:bg-gray-800 p-2 rounded-md">
                     Grabación{" "}
-                  </Link>
-                </li>
-                <li className="flex items-center w-full dark:hover:bg-gray-800 p-2 rounded-md">
-                  <Link
-                    className=""
-                    href="/mixing"
-                    title="Mezcla y Masterización"
-                  >
+                  </li>
+                </Link>
+                <Link
+                  className="w-full h-full"
+                  href="/mixing"
+                  title="Mezcla y Masterización"
+                >
+                  <li className="flex items-center w-full hover:bg-gray-200gm dark:hover:bg-gray-800 p-2 rounded-md">
                     Mezcla y Masterización{" "}
-                  </Link>
-                </li>
-                <li className="flex items-center w-full dark:hover:bg-gray-800 p-2 rounded-md">
-                  <Link
-                    className=""
-                    href="/produccion"
-                    title="Producción Instrumental"
-                  >
+                  </li>
+                </Link>
+                <Link
+                  className="w-full h-full"
+                  href="/produccion"
+                  title="Producción Instrumental"
+                >
+                  <li className="flex items-center w-full hover:bg-gray-200gm dark:hover:bg-gray-800 p-2 rounded-md">
                     Producción Instrumental{" "}
-                  </Link>
-                </li>
-                <li className="flex items-center w-full dark:hover:bg-gray-800 p-2 rounded-md">
-                  <Link className="" href="/clases" title="Clases">
+                  </li>
+                </Link>
+                <Link className="w-full h-full" href="/clases" title="Clases">
+                  <li className="flex items-center w-full hover:bg-gray-200gm dark:hover:bg-gray-800 p-2 rounded-md">
                     Clases{" "}
-                  </Link>
-                </li>
+                  </li>
+                </Link>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>

@@ -289,7 +289,6 @@ const MusicPlayer = ({
       </div>
 
       <div className={`${!showMixer ? "hidden" : ""} col-span-3 text-center `}>
-        <p className="mb-2 text-gray-500">Ajusta el sonido</p>
         <Slider
           defaultValue={[0]}
           max={100}
@@ -306,6 +305,7 @@ const MusicPlayer = ({
         } col-span-3 flex flex-row justify-between items-center`}
       >
         <Unmixed />
+        <p className="mb-2 text-gray-500">Ajusta el sonido</p>
         <Mixed />
       </div>
     </motion.div>
