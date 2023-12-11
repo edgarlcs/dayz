@@ -120,15 +120,15 @@
 .slider:hover::-moz-range-thumb {
   background: #000;
 }
+.dark .slider:hover::-webkit-slider-thumb {
+  background: #fff;
+}
+
+.dark .slider:hover::-moz-range-thumb {
+  background: #fff;
+}
 
 /* Optional: Style for the thumb when it's being dragged */
-.slider:active::-webkit-slider-thumb {
-  background: #000;
-}
-
-.slider:active::-moz-range-thumb {
-  background: #000;
-}
 
 .container {
   width: 150px;

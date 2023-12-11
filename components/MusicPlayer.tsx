@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import { isIOS } from "react-device-detect";
 import { useMusicPlayer } from "./MusicPlayerContext";
 import Spotify from "./Spotify";
-import { Button } from "./ui/button";
+import { useTheme } from "next-themes";
 
 interface MusicPlayerProps {
   mixedSong: string;
@@ -45,8 +45,17 @@ const MusicPlayer = ({
   const [isManuallySeeking, setIsManuallySeeking] = useState<boolean>(false);
   const [showMixer, setShowMixer] = useState<boolean>(true);
   const [background, setBackground] = useState<string>("bg-white");
-
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const { resolvedTheme } = useTheme();
   const { playingId, setPlayingId } = useMusicPlayer();
+
+  useEffect(() => {
+    if (resolvedTheme === "dark") {
+      setIsDarkMode(true);
+    } else {
+      setIsDarkMode(false);
+    }
+  }, [resolvedTheme]);
   useEffect(() => {
     setShowMixer(!isIOS);
   }, [isIOS]);
@@ -171,7 +180,7 @@ const MusicPlayer = ({
 
   return (
     <motion.div
-      className={`grid grid-cols-3 w-full md:w-[600px] gap-3 p-4 rounded-lg  shadow-md`}
+      className={`grid grid-cols-3 w-full md:w-[600px] gap-3 p-4 rounded-lg  shadow-md  bg-gray-50  dark:bg-gray-900 `}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.7 }}
@@ -209,6 +218,7 @@ const MusicPlayer = ({
         >
           <section className="flex flex-row gap-2 items-center">
             <Music />
+            {""}
             <p className="text-xl md:text-2xl font-bold">{songName}</p>
           </section>
           <section className="flex flex-row gap-2 items-center">
@@ -235,9 +245,13 @@ const MusicPlayer = ({
             onChange={handleTimeSliderChange}
             className="slider"
             style={{
-              background: `linear-gradient(to right, #555 ${
-                (currentTime / duration) * 100
-              }%, #d3d3d3 ${(currentTime / duration) * 100}% )`,
+              background: isDarkMode
+                ? `linear-gradient(to right, #d3d3d3 ${
+                    (currentTime / duration) * 100
+                  }%, #555 ${(currentTime / duration) * 100}% )` // Inverted colors for dark mode
+                : `linear-gradient(to right, #555 ${
+                    (currentTime / duration) * 100
+                  }%, #d3d3d3 ${(currentTime / duration) * 100}% )`, // Original colors for light mode
             }}
           />
           <div className=" w-[50px] text-center">{formatTime(currentTime)}</div>
