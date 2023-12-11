@@ -29,7 +29,9 @@ const Navbar = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 2 }}
     >
-      <Image src={logo} alt="Adrian Dayz logo" height={64} priority />
+      <motion.a whileHover={{ scale: 1.2 }} href="/">
+        <Image src={logo} alt="Adrian Dayz logo" height={64} priority />
+      </motion.a>
 
       <NavigationMenu>
         <NavigationMenuList>

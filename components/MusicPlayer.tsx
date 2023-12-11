@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Slider } from "@/components/ui/slider";
+import { Slider } from "@/components/ui/slider-hover";
 import { Pause, Play, Music, UserRound } from "lucide-react";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
@@ -22,7 +22,11 @@ interface MusicPlayerProps {
   backgroundColor?: string;
   spotifyLink?: string;
 }
-
+const formatTime = (time: number) => {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+};
 const MusicPlayer = ({
   mixedSong,
   rawSong,
@@ -45,10 +49,13 @@ const MusicPlayer = ({
   const { playingId, setPlayingId } = useMusicPlayer();
   useEffect(() => {
     setShowMixer(!isIOS);
+  }, [isIOS]);
+
+  useEffect(() => {
     if (backgroundColor) {
       setBackground(backgroundColor);
     }
-  }, []);
+  }, [backgroundColor]);
 
   useEffect(() => {
     const song1Volume = isIOS ? 1 : mixValue / 100;
@@ -160,12 +167,6 @@ const MusicPlayer = ({
       }
     }
     setIsPlaying((prev) => !prev);
-  };
-
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   return (
