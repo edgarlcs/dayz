@@ -11,6 +11,13 @@ import { isIOS } from "react-device-detect";
 import { useMusicPlayer } from "./MusicPlayerContext";
 import Spotify from "./Spotify";
 import { useTheme } from "next-themes";
+import {
+  Hct,
+  hexFromArgb,
+  DislikeAnalyzer,
+  sourceColorFromImage,
+  themeFromSourceColor,
+} from "@material/material-color-utilities";
 
 interface MusicPlayerProps {
   mixedSong: string;
@@ -39,12 +46,14 @@ const MusicPlayer = ({
 }: MusicPlayerProps) => {
   const song1Ref = useRef<HTMLAudioElement>(null);
   const song2Ref = useRef<HTMLAudioElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const [mixValue, setMixValue] = useState<number>(0); // Default mix value set to 0 for equal mix
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [hasPlayed, setHasPlayed] = useState<boolean>(false); // Used to determine if the song has been played before
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isManuallySeeking, setIsManuallySeeking] = useState<boolean>(false);
   const [showMixer, setShowMixer] = useState<boolean>(true);
-  const [background, setBackground] = useState<string>("bg-white");
+  // const [background, setBackground] = useState<string>("bg-white");
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const { resolvedTheme } = useTheme();
   const { playingId, setPlayingId } = useMusicPlayer();
@@ -60,11 +69,25 @@ const MusicPlayer = ({
     setShowMixer(!isIOS);
   }, [isIOS]);
 
-  useEffect(() => {
-    if (backgroundColor) {
-      setBackground(backgroundColor);
-    }
-  }, [backgroundColor]);
+  // useEffect(() => {
+  //   const getColor = async (image: HTMLImageElement) => {
+  //     const argb = await sourceColorFromImage(image);
+  //     const theme = themeFromSourceColor(argb);
+
+  //     const color = hexFromArgb(theme.schemes.light.primary);
+  //     console.log(color);
+  //     // setBackground(`bg-[${color}]`);
+  //     setBackground(color);
+  //     // console.log(color);
+  //   };
+  //   const image = imgRef.current;
+  //   if (!image) return;
+  //   getColor(image);
+
+  //   // if (backgroundColor) {
+  //   //   setBackground(backgroundColor);
+  //   // }
+  // }, []);
 
   useEffect(() => {
     const song1Volume = isIOS ? 1 : mixValue / 100;
@@ -180,10 +203,11 @@ const MusicPlayer = ({
 
   return (
     <motion.div
-      className={`grid grid-cols-3 w-full md:w-[600px] gap-3 p-4 rounded-lg  shadow-md  bg-gray-50  dark:bg-gray-900 `}
+      className={`grid grid-cols-3 w-full md:w-[600px] gap-3 p-4 rounded-lg shadow-md bg-gray-50 dark:bg-gray-900`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.7 }}
+      // style={{ background: background }}
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -198,6 +222,7 @@ const MusicPlayer = ({
           width={128}
           className=" col-span-1 rounded-md shadow-lg"
           priority
+          ref={imgRef}
         />
         <motion.a
           whileHover={{ scale: 1.2 }}
@@ -215,6 +240,7 @@ const MusicPlayer = ({
           initial={{ x: -5 }}
           animate={{ x: 0 }}
           transition={{ duration: 0.7 }}
+          className="flex flex-col gap-3"
         >
           <section className="flex flex-row gap-2 items-center">
             <Music />
@@ -229,7 +255,10 @@ const MusicPlayer = ({
 
         <div className="flex flex-row items-center gap-1">
           <motion.button
-            onClick={togglePlay}
+            onClick={() => {
+              togglePlay();
+              setHasPlayed(true);
+            }}
             className="play-button "
             whileHover={{ scale: 1.2 }}
           >
@@ -244,6 +273,7 @@ const MusicPlayer = ({
             value={(currentTime / duration) * 100} // Set the value as a percentage of the duration
             onChange={handleTimeSliderChange}
             className="slider"
+            disabled={!hasPlayed}
             style={{
               background: isDarkMode
                 ? `linear-gradient(to right, #d3d3d3 ${
@@ -258,7 +288,8 @@ const MusicPlayer = ({
         </div>
       </div>
 
-      <div className={`${!showMixer ? "hidden" : ""} col-span-3`}>
+      <div className={`${!showMixer ? "hidden" : ""} col-span-3 text-center `}>
+        <p className="mb-2 text-gray-500">Ajusta el sonido</p>
         <Slider
           defaultValue={[0]}
           max={100}

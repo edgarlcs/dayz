@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "@/public/images/ass.png";
-import logoLight from "@/public/images/logo_light.svg";
+import logo from "@/public/images/logo.png";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -15,6 +14,7 @@ import {
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
 import DarkModeToggleButton from "./DarkModeToggleButton";
+import { Button } from "./ui/button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,11 +23,11 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <motion.div
-      className=" flex  w-full h-16 justify-between items-center bg-white dark:bg-black pl-0 pr-2"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
+    <div
+      className=" flex  w-full h-16 justify-between items-center bg-transparent dark:bg-black pl-0 pr-2"
+      // initial={{ opacity: 0 }}
+      // animate={{ opacity: 1 }}
+      // transition={{ duration: 2 }}
     >
       <motion.a whileHover={{ scale: 1.2 }} href="/">
         <Image src={logo} alt="Adrian Dayz logo" height={64} priority />
@@ -36,45 +36,51 @@ const Navbar = () => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Inicio
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
             <NavigationMenuTrigger>Servicios</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-6 w-full md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                <li className="row-span-3">
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      <div className="mb-2 mt-4 text-lg font-medium">
-                        shadcn/ui
-                      </div>
-                      <p className="text-sm leading-tight text-muted-foreground"></p>
-                    </a>
-                  </NavigationMenuLink>
+              <ul className="grid gap-3 p-6 w-full md:w-[400px]">
+                <li className="flex items-center w-full dark:hover:bg-gray-800 p-2 rounded-md">
+                  <Link className="" href="/grabacion" title="Grabación">
+                    Grabación{" "}
+                  </Link>
                 </li>
-                <a href="/docs" title="Introduction">
-                  Re-usable components
-                </a>
-                <a href="/docs/installation" title="Installation">
-                  How to install
-                </a>
-                <a href="/docs/primitives/typography" title="Typography">
-                  Styles for headings
-                </a>
+                <li className="flex items-center w-full dark:hover:bg-gray-800 p-2 rounded-md">
+                  <Link
+                    className=""
+                    href="/mixing"
+                    title="Mezcla y Masterización"
+                  >
+                    Mezcla y Masterización{" "}
+                  </Link>
+                </li>
+                <li className="flex items-center w-full dark:hover:bg-gray-800 p-2 rounded-md">
+                  <Link
+                    className=""
+                    href="/produccion"
+                    title="Producción Instrumental"
+                  >
+                    Producción Instrumental{" "}
+                  </Link>
+                </li>
+                <li className="flex items-center w-full dark:hover:bg-gray-800 p-2 rounded-md">
+                  <Link className="" href="/clases" title="Clases">
+                    Clases{" "}
+                  </Link>
+                </li>
               </ul>
             </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/contacto" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Contacto
+              </NavigationMenuLink>
+            </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <DarkModeToggleButton />
-    </motion.div>
+    </div>
   );
 };
 
