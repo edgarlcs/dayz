@@ -4,10 +4,16 @@ import Image from "next/image";
 import secuelas from "@/public/images/secuelas.jpg";
 import plebes from "@/public/images/asi_son_mis_plebes.jpg";
 import { MusicPlayerProvider } from "@/components/MusicPlayerContext";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "DAYZ STUDIO",
+  description: "DAYZ STUDIO",
+};
 
 export default function Home() {
   return (
-    <main className="flex min-h-[calc(100vh-64px)] flex-col items-center p-2 gap-4">
+    <main className="flex min-h-[calc(100vh-64px)] flex-col  items-center p-2 gap-4">
       <MusicPlayerProvider>
         <MusicPlayer
           mixedSong="/music/secuelas_fx.mp3"

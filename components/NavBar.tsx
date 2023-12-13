@@ -44,7 +44,7 @@ const Navbar = () => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="pr-0">
+            <NavigationMenuTrigger className="px-2">
               Servicios
             </NavigationMenuTrigger>
             <NavigationMenuContent>

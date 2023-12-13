@@ -3,7 +3,7 @@ import Instagram from "@/components/Instagram";
 import Whatsapp from "@/components/Whatsapp";
 const ContactPage = () => {
   return (
-    <div className="flex justify-center items-center h-[calc(100dvh-64px)]">
+    <div className="flex justify-center items-center h-[calc(100dvh-64px)] max-h-[calc(100dvh-64px)]">
       <div className="flex flex-col justify-center items-center  w-full  py-14 px-4 gap-2">
         {/* <div className=""> */}
         <h1 className="text-4xl font-bold">Contacto</h1>

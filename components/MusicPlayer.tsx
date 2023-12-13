@@ -203,7 +203,7 @@ const MusicPlayer = ({
 
   return (
     <motion.div
-      className={`grid grid-cols-3 w-full md:w-[600px] gap-3 p-4 rounded-lg shadow-md bg-gray-50 dark:bg-gray-900`}
+      className={`grid grid-cols-3 w-full gap-3 p-4 rounded-lg shadow-md bg-gray-50 dark:bg-gray-900`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.7 }}
