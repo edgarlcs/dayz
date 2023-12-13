@@ -203,7 +203,7 @@ const MusicPlayer = ({
 
   return (
     <motion.div
-      className={`grid grid-cols-3 w-full gap-3 p-4 rounded-lg shadow-md bg-gray-50 dark:bg-gray-900`}
+      className={`flex flex-col md:grid md:grid-cols-3 w-full md:gap-3 p-4 rounded-lg shadow-md bg-gray-50 dark:bg-gray-900`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.7 }}
@@ -220,7 +220,7 @@ const MusicPlayer = ({
           alt={`${songName} cover`}
           height={128}
           width={128}
-          className=" col-span-1 rounded-md shadow-lg"
+          className="col-span-1 rounded-md shadow-lg"
           priority
           ref={imgRef}
         />
@@ -233,27 +233,27 @@ const MusicPlayer = ({
         </motion.a>
       </motion.div>
 
-      <div className="flex flex-col col-span-2 justify-between">
+      <div className="flex flex-col col-span-2 justify-between gap-2 ">
         <audio ref={song1Ref} src={mixedSong} preload="auto" />
         <audio ref={song2Ref} src={rawSong} preload="auto" />
         <motion.div
           initial={{ x: -5 }}
           animate={{ x: 0 }}
           transition={{ duration: 0.7 }}
-          className="flex flex-col gap-3"
+          className="flex flex-col md:gap-3"
         >
           <section className="flex flex-row gap-2 items-center">
             <Music />
             {""}
-            <p className="text-xl md:text-2xl font-bold">{songName}</p>
+            <p className="text-sm md:text-2xl font-bold">{songName}</p>
           </section>
           <section className="flex flex-row gap-2 items-center">
             <UserRound />
-            <p className="text-lg md:text-xl">{artist}</p>
+            <p className="text-sm md:text-xl">{artist}</p>
           </section>
         </motion.div>
 
-        <div className="flex flex-row items-center gap-1">
+        <div className="flex flex-row items-center gap-1 mb-2 md:mb-0">
           <motion.button
             onClick={() => {
               togglePlay();
@@ -288,7 +288,9 @@ const MusicPlayer = ({
         </div>
       </div>
 
-      <div className={`${!showMixer ? "hidden" : ""} col-span-3 text-center `}>
+      <div
+        className={`${!showMixer ? "hidden" : ""} col-span-3 text-center mb-2`}
+      >
         <Slider
           defaultValue={[0]}
           max={100}
@@ -304,9 +306,22 @@ const MusicPlayer = ({
           !showMixer ? "hidden" : ""
         } col-span-3 flex flex-row justify-between items-center`}
       >
-        <Unmixed />
-        <p className="mb-2 text-gray-500">Ajusta el sonido</p>
-        <Mixed />
+        <motion.button
+          onClick={() => setMixValue(0)}
+          whileHover={{ scale: 1.4 }}
+        >
+          <Unmixed />
+        </motion.button>
+
+        <p className="mb-2 text-xs md:text-md text-gray-500">
+          Ajusta el sonido
+        </p>
+        <motion.button
+          onClick={() => setMixValue(100)}
+          whileHover={{ scale: 1.3 }}
+        >
+          <Mixed />
+        </motion.button>
       </div>
     </motion.div>
   );

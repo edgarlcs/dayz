@@ -6,8 +6,8 @@ const Unmixed = () => {
       id="Layer_2"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 408.34 517.47"
-      width={18}
-      height={18}
+      width={16}
+      height={16}
       className="fill-black dark:fill-white"
     >
       <defs>

@@ -16,6 +16,7 @@ import {
 } from "./ui/navigation-menu";
 import DarkModeToggleButton from "./DarkModeToggleButton";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,14 +38,16 @@ const Navbar = () => {
       </motion.div>
 
       <NavigationMenu>
-        <NavigationMenuList>
+        <NavigationMenuList className="">
           <NavigationMenuItem>
-            <Link href={"/"}>
-              <Home />
-            </Link>
+            <motion.div whileHover={{ scale: 1.2 }}>
+              <Link href={"/"}>
+                <Home />
+              </Link>
+            </motion.div>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="px-2">
+            <NavigationMenuTrigger className="bg-transparent px-1 ml-2 hover:underline hover:bg-transparent focus:bg-transparent">
               Servicios
             </NavigationMenuTrigger>
             <NavigationMenuContent>
@@ -85,10 +88,14 @@ const Navbar = () => {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href="/contacto" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <Link href="/contacto">
+              <div
+                className={cn(
+                  `bg-transparent px-1 text-sm font-medium hover:underline`
+                )}
+              >
                 Contacto
-              </NavigationMenuLink>
+              </div>
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
