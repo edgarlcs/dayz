@@ -41,13 +41,13 @@ const Navbar = () => {
         <NavigationMenuList className="">
           <NavigationMenuItem>
             <motion.div whileHover={{ scale: 1.2 }}>
-              <Link href={"/"}>
+              <Link href={"/"} aria-label="Ve al inicio">
                 <Home />
               </Link>
             </motion.div>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="bg-transparent px-1 ml-2 hover:underline hover:bg-transparent focus:bg-transparent">
+            <NavigationMenuTrigger className=" px-1 ml-2 hover:underline ">
               Servicios
             </NavigationMenuTrigger>
             <NavigationMenuContent>

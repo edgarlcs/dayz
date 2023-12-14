@@ -228,6 +228,7 @@ const MusicPlayer = ({
           whileHover={{ scale: 1.2 }}
           href={spotifyLink}
           target="_blank"
+          aria-label={`Escucha ${songName} en Spotify`}
         >
           <Spotify />
         </motion.a>
@@ -254,18 +255,36 @@ const MusicPlayer = ({
         </motion.div>
 
         <div className="flex flex-row items-center gap-1 mb-2 md:mb-0">
-          <motion.button
-            onClick={() => {
-              togglePlay();
-              setHasPlayed(true);
-            }}
-            className="play-button "
-            whileHover={{ scale: 1.2 }}
-          >
-            {isPlaying ? <Pause /> : <Play />}
-          </motion.button>
+          {isPlaying ? (
+            <motion.button
+              aria-label={`Pausa la cancion ${songName}`}
+              aria-pressed="true"
+              onClick={() => {
+                togglePlay();
+                setHasPlayed(true);
+              }}
+              className="play-button "
+              whileHover={{ scale: 1.2 }}
+            >
+              <Pause />
+            </motion.button>
+          ) : (
+            <motion.button
+              aria-label={`Reproduce la cancion ${songName}`}
+              aria-pressed="false"
+              onClick={() => {
+                togglePlay();
+                setHasPlayed(true);
+              }}
+              className="play-button "
+              whileHover={{ scale: 1.2 }}
+            >
+              <Play />
+            </motion.button>
+          )}
           <input
             id="time-slider"
+            aria-label="Time slider"
             type="range"
             min="0"
             step={"0.1"}
@@ -292,6 +311,7 @@ const MusicPlayer = ({
         className={`${!showMixer ? "hidden" : ""} col-span-3 text-center mb-2`}
       >
         <Slider
+          aria-label="Mezcla entre la cancion original y la mezclada"
           defaultValue={[0]}
           max={100}
           step={1}
@@ -307,6 +327,7 @@ const MusicPlayer = ({
         } col-span-3 flex flex-row justify-between items-center`}
       >
         <motion.button
+          aria-label="Establece el mix a 0 por ciento (sin mezclar)"
           onClick={() => setMixValue(0)}
           whileHover={{ scale: 1.4 }}
         >
@@ -317,6 +338,7 @@ const MusicPlayer = ({
           Ajusta el sonido
         </p>
         <motion.button
+          aria-label="Establece el mix a 100 por ciento (mezcla completa)"
           onClick={() => setMixValue(100)}
           whileHover={{ scale: 1.3 }}
         >
