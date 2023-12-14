@@ -234,8 +234,8 @@ const MusicPlayer = ({
       </motion.div>
 
       <div className="flex flex-col col-span-2 justify-between gap-2 ">
-        <audio ref={song1Ref} src={mixedSong} preload="none" />
-        <audio ref={song2Ref} src={rawSong} preload="none" />
+        <audio ref={song1Ref} src={mixedSong} preload="auto" />
+        <audio ref={song2Ref} src={rawSong} preload="auto" />
         <motion.div
           initial={{ x: -5 }}
           animate={{ x: 0 }}
